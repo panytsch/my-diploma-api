@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6b23cad8-4f72-4f33-bc31-538d2f8a632d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +41,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="7" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
+            <state relative-caret-position="173">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -111,7 +112,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/common" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-2" />
     <option name="y" value="23" />
     <option name="width" value="1370" />
@@ -129,35 +130,6 @@
             <path>
               <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-trello-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-trello-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -196,16 +168,15 @@
       <workItem from="1528113319599" duration="143000" />
       <workItem from="1528116126106" duration="2115000" />
       <workItem from="1528119174820" duration="259000" />
-      <workItem from="1528181691883" duration="1695000" />
+      <workItem from="1528181691883" duration="2229000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4212000" />
+    <option name="totallyTimeSpent" value="4746000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="23" width="1370" height="722" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15227273" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -216,7 +187,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.5117845" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.5117845" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -288,8 +259,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="7" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
+        <state relative-caret-position="173">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
