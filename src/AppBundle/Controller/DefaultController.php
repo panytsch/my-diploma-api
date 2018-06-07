@@ -10,23 +10,17 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     *
      */
     public function indexAction()
     {
         $user = $this
             ->getDoctrine()
             ->getRepository('AppBundle:User')
-            ->find(1)
+            ->findAll()
         ;
-        $jsonContent = $this->get('app.serializer')->serialize($user->getBoards());
-        echo $jsonContent;
-//        $arr = [];
-//        $arr[$user->getBoards()[0]->getId()] = $user->getBoards()[0]->getTitle();
-//        $serializer = $this->container->get('app.serializer');
-//        $arr = $serializer->ser($user, 'json');
-//        dump($this->container->get('app.serializer'));
-//        dump($arr);
-        die();
-//        return JsonResponse::create($arr);
+        $jsonContent = $this->get('app.serializer')->serialize($user);
+        return JsonResponse::create(null)->setJson($jsonContent);
     }
+
 }
