@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,11 +23,33 @@ class Board
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ownerId", type="integer")
+     * @var string
+     * @ORM\Column(name="title", length=255, type="string")
      */
-    private $ownerId;
+    private $title;
+
+    /**
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param ArrayCollection $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @var User|null
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="boards")
+     */
+    private $user;
+
 
     /**
      * @var bool
@@ -44,30 +67,6 @@ class Board
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set ownerId
-     *
-     * @param integer $ownerId
-     *
-     * @return Board
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
-
-        return $this;
-    }
-
-    /**
-     * Get ownerId
-     *
-     * @return int
-     */
-    public function getOwnerId()
-    {
-        return $this->ownerId;
     }
 
     /**
@@ -93,5 +92,28 @@ class Board
     {
         return $this->public;
     }
-}
 
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Board
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+}

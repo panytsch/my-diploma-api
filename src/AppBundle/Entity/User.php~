@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,22 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
-     * @return ArrayCollection
-     */
-    public function getBoards()
-    {
-        return $this->boards;
-    }
-
-    /**
-     * @param ArrayCollection $boards
-     */
-    public function setBoards($boards)
-    {
-        $this->boards = $boards;
-    }
-
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -37,12 +20,6 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Board", mappedBy="user")
-     */
-    private $boards;
 
     /**
      * @var string
@@ -154,59 +131,5 @@ class User
     {
         return $this->password;
     }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return User
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->boards = new ArrayCollection();
-    }
-
-    /**
-     * Add board
-     *
-     * @param Board $board
-     *
-     * @return User
-     */
-    public function addBoard(Board $board)
-    {
-        $this->boards[] = $board;
-
-        return $this;
-    }
-
-    /**
-     * Remove board
-     *
-     * @param Board $board
-     */
-    public function removeBoard(Board $board)
-    {
-        $this->boards->removeElement($board);
-    }
 }
+
