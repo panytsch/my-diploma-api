@@ -45,6 +45,13 @@ class Board
     }
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Stick", mappedBy="board")
+     */
+    private $stick;
+
+    /**
      * @var User|null
      * @ORM\ManyToOne(targetEntity="User", inversedBy="boards")
      */

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +14,7 @@ class UserController extends Controller
     /**
      * @var Request $request
      * @Route("/users/{id}", name="authuser")
+     * @Method({"GET"})
      * @return JsonResponse
      */
     public function authAction(Request $request)
