@@ -108,5 +108,69 @@ class Stick
     {
         return $this->ownerId;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->item = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Set board
+     *
+     * @param \AppBundle\Entity\Board $board
+     *
+     * @return Stick
+     */
+    public function setBoard(\AppBundle\Entity\Board $board = null)
+    {
+        $this->board = $board;
+
+        return $this;
+    }
+
+    /**
+     * Get board
+     *
+     * @return \AppBundle\Entity\Board
+     */
+    public function getBoard()
+    {
+        return $this->board;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \AppBundle\Entity\Item $item
+     *
+     * @return Stick
+     */
+    public function addItem(\AppBundle\Entity\Item $item)
+    {
+        $this->item[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \AppBundle\Entity\Item $item
+     */
+    public function removeItem(\AppBundle\Entity\Item $item)
+    {
+        $this->item->removeElement($item);
+    }
+
+    /**
+     * Get item
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
+}

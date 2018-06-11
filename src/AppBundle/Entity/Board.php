@@ -123,4 +123,45 @@ class Board
     {
         return $this->title;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stick = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stick
+     *
+     * @param \AppBundle\Entity\Stick $stick
+     *
+     * @return Board
+     */
+    public function addStick(\AppBundle\Entity\Stick $stick)
+    {
+        $this->stick[] = $stick;
+
+        return $this;
+    }
+
+    /**
+     * Remove stick
+     *
+     * @param \AppBundle\Entity\Stick $stick
+     */
+    public function removeStick(\AppBundle\Entity\Stick $stick)
+    {
+        $this->stick->removeElement($stick);
+    }
+
+    /**
+     * Get stick
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStick()
+    {
+        return $this->stick;
+    }
 }

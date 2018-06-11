@@ -101,5 +101,28 @@ class Item
     {
         return $this->description;
     }
-}
 
+    /**
+     * Set stick
+     *
+     * @param \AppBundle\Entity\Stick $stick
+     *
+     * @return Item
+     */
+    public function setStick(\AppBundle\Entity\Stick $stick = null)
+    {
+        $this->stick = $stick;
+
+        return $this;
+    }
+
+    /**
+     * Get stick
+     *
+     * @return \AppBundle\Entity\Stick
+     */
+    public function getStick()
+    {
+        return $this->stick;
+    }
+}
