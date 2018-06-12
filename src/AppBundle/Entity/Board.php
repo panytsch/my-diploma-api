@@ -53,7 +53,8 @@ class Board
 
     /**
      * @var User|null
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="boards")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="boards")
+     * @ORM\JoinTable(name="users_boards")
      */
     private $user;
 
@@ -163,5 +164,29 @@ class Board
     public function getStick()
     {
         return $this->stick;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Board
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
     }
 }

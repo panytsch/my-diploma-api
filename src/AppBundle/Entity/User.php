@@ -40,7 +40,7 @@ class User
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Board", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="Board", mappedBy="user")
      */
     private $boards;
 

@@ -41,10 +41,16 @@ class UserController extends Controller
         $user = new User();
         $user->setNickname($request->get('nickname'));
         $user->setEmail($request->get('email'));
-        $user->setPassword($request->get('password'));
-        $user->setToken(OAuthProvider::generateToken(10));
-        dump($user);
-        $jsonContent = $this->get('app.serializer')->serialize($status);
+        $user->setPassword(password_hash($request->get('password'), PASSWORD_DEFAULT));
+        $user->setToken(bin2hex(openssl_random_pseudo_bytes(25)));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        try{
+            $em->flush();
+            $jsonContent = $this->get('app.serializer')->serialize(1);
+        } catch (\Exception $e){
+            $jsonContent = $this->get('app.serializer')->serialize(0);
+        }
         return JsonResponse::create(null)->setJson($jsonContent);
     }
 }
