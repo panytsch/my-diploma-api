@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use OAuthProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,15 +17,13 @@ class DefaultController extends Controller
      */
     public function indexGetAction()
     {
-
-        die();
-//        $user = $this
-//            ->getDoctrine()
-//            ->getRepository('AppBundle:User')
-//            ->findAll()
+        $user = $this
+            ->getDoctrine()
+            ->getRepository("AppBundle:User")
+            ->find(1)
         ;
-//        $jsonContent = $this->get('app.serializer')->serialize($user);
-//        return JsonResponse::create(null)->setJson($jsonContent);
+        $jsonContent = $this->get('app.serializer')->serialize($user);
+        return JsonResponse::create(null)->setJson($jsonContent);
     }
 
     /**
