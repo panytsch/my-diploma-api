@@ -34,9 +34,15 @@ class UserController extends BasicController
             ->getRepository("AppBundle:User")
             ->findOneBy(['nickname' => $request->get('nickname')])
         ;
-        if (password_verify($request->get('password'), $user->getPassword())){
-            $jsonContent = $this->get('app.serializer')->serialize($user);
-        }else{
+        if ($user){
+            $user->setBoards(null);
+            if (password_verify($request->get('password'), $user->getPassword())){
+                $user->setPassword('You shall not pass!!!');
+                $jsonContent = $this->get('app.serializer')->serialize($user);
+            } else{
+                $jsonContent = $this->get('app.serializer')->serialize(null);
+            }
+        } else{
             $jsonContent = $this->get('app.serializer')->serialize(null);
         }
         return JsonResponse::create(null)->setJson($jsonContent);
