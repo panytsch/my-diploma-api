@@ -4,15 +4,23 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
-use OAuthProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserController extends Controller
+class UserController extends BasicController
 {
+    /**
+     * @param Request $request
+     * @Route("/user/test")
+     * @Method({"GET"})
+     */
+    public function testAction(Request $request)
+    {
+        dump(password_hash($request->get('password'), PASSWORD_DEFAULT));
+        die();
+    }
     /**
      * @Route("/users/authorize")
      * @Method({"GET"})
@@ -24,9 +32,13 @@ class UserController extends Controller
         $user = $this
             ->getDoctrine()
             ->getRepository("AppBundle:User")
-            ->findOneBy(['nickname' => $request->get('nickname'), 'password' => $request->get('password')])
+            ->findOneBy(['nickname' => $request->get('nickname')])
         ;
-        $jsonContent = $this->get('app.serializer')->serialize($user);
+        if (password_verify($request->get('password'), $user->getPassword())){
+            $jsonContent = $this->get('app.serializer')->serialize($user);
+        }else{
+            $jsonContent = $this->get('app.serializer')->serialize(null);
+        }
         return JsonResponse::create(null)->setJson($jsonContent);
     }
 
