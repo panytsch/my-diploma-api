@@ -15,11 +15,17 @@ class UserController extends BasicController
      * @param Request $request
      * @Route("/user/test")
      * @Method({"GET"})
+     * @return JsonResponse
      */
     public function testAction(Request $request)
     {
-        dump(password_hash($request->get('password'), PASSWORD_DEFAULT));
-        die();
+        $user = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->find(1)
+        ;
+        $jsonContent = $this->get('app.serializer')->serialize($user);
+        return JsonResponse::create(null)->setJson($jsonContent);
     }
     /**
      * @Route("/users/authorize")
@@ -65,7 +71,8 @@ class UserController extends BasicController
         $em->persist($user);
         try{
             $em->flush();
-            $jsonContent = $this->get('app.serializer')->serialize(1);
+            $user->setPassword('You shall not pass');
+            $jsonContent = $this->get('app.serializer')->serialize($user);
         } catch (\Exception $e){
             $jsonContent = $this->get('app.serializer')->serialize(0);
         }

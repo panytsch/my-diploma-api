@@ -37,6 +37,9 @@ class BoardController extends BasicController
             ->findOneBy(['nickname' => $request->get('nickname')])
             ->getBoards()
         ;
+        foreach ($boards as &$item){
+            $item->setUser(null);
+        }
         $jsonContent = $this->get('app.serializer')->serialize($boards);
         return JsonResponse::create(null)->setJson($jsonContent);
     }
