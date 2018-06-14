@@ -54,10 +54,21 @@ class UserController extends BasicController
         return JsonResponse::create(null)->setJson($jsonContent);
     }
 
+//    /**
+//     * @Route("/users/registration")
+//     * @Method({"OPTIONS"})
+//     * @return JsonResponse
+//     */
+//    public function optionsAction()
+//    {
+//        $response = new JsonResponse(null);
+//        return $response;
+//    }
+
     /**
      * @Route("/users/registration")
      * @param Request $request
-     * @Method({"POST"})
+     * @Method({"POST","OPTIONS"})
      * @return JsonResponse
      */
     public function registrationAction(Request $request)
@@ -68,14 +79,20 @@ class UserController extends BasicController
         $user->setPassword(password_hash($request->get('password'), PASSWORD_DEFAULT));
         $user->setToken(bin2hex(openssl_random_pseudo_bytes(25)));
         $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
         try{
+            $em->persist($user);
             $em->flush();
             $user->setPassword('You shall not pass');
             $jsonContent = $this->get('app.serializer')->serialize($user);
         } catch (\Exception $e){
-            $jsonContent = $this->get('app.serializer')->serialize(0);
+            $jsonContent = $this->get('app.serializer')->serialize(null);
         }
+        $response = new JsonResponse(null);
+        $response->setJson($jsonContent);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS');
         return JsonResponse::create(null)->setJson($jsonContent);
     }
+
 }
