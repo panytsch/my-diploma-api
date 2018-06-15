@@ -82,7 +82,7 @@ class UserController extends BasicController
                 $user->setPassword('You shall not pass');
                 $jsonContent = $this->get('app.serializer')->serialize($user);
             } catch (\Exception $e){
-                $jsonContent = 'noting to transfer';
+                return new JsonResponse(null);
             }
         }
         return JsonResponse::create(null)->setJson($jsonContent);
