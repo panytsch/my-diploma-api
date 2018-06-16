@@ -44,14 +44,6 @@ class Stick
     private $item;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ownerId", type="integer")
-     */
-    private $ownerId;
-
-
-    /**
      * Get id
      *
      * @return int
@@ -85,29 +77,6 @@ class Stick
         return $this->title;
     }
 
-    /**
-     * Set ownerId
-     *
-     * @param integer $ownerId
-     *
-     * @return Stick
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
-
-        return $this;
-    }
-
-    /**
-     * Get ownerId
-     *
-     * @return int
-     */
-    public function getOwnerId()
-    {
-        return $this->ownerId;
-    }
     /**
      * Constructor
      */

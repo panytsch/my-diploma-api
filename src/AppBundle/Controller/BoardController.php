@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Board;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,4 +38,5 @@ class BoardController extends BasicController
         $jsonContent = $this->get('app.serializer')->serialize($boards);
         return JsonResponse::create(null)->setJson($jsonContent);
     }
+
 }
