@@ -15,6 +15,8 @@ class StickController extends BasicController
      * @Method({"POST", "OPTIONS"})
      * @param Request $request
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addStickAction(Request $request)
     {
@@ -41,7 +43,6 @@ class StickController extends BasicController
                     ->getDoctrine()
                     ->getRepository('AppBundle:Stick')
                     ->getPosition($board->getId());
-//                dump($position); die();
                 $stick->setPosition($position + 1);
                 try{
                     $em = $this->getDoctrine()->getManager();

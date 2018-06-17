@@ -18,7 +18,7 @@ class BoardController extends BasicController
      * @param Request $request
      * @return JsonResponse
      */
-    public function getUserBoards(Request $request)
+    public function getUserBoardsAction(Request $request)
     {
         $verify = $this->checkToken($request->get('token'),$request->get('nickname'));
         if (!$verify){
@@ -39,4 +39,45 @@ class BoardController extends BasicController
         return JsonResponse::create(null)->setJson($jsonContent);
     }
 
+    /**
+     * @Route("/boards")
+     * @Method({"POST", "OPTIONS"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function setUserBoardAction(Request $request)
+    {
+        $response = new JsonResponse(null);
+        if ($request->getMethod()==='OPTIONS'){
+            $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+            $response->headers->set('Access-Control-Allow-Origin','*');
+            $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS');
+            $json = 'options';
+        }else{
+            $obj = json_decode($request->getContent());
+            if ($this->checkToken($obj->token, $obj->nickname)){
+                $board = new Board();
+                $user = $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:User')
+                    ->findOneBy(['nickname' => $obj->nickname])
+                ;
+                $board->addUser($user);
+                $board->setTitle($obj->title);
+                $board->setPublic(false);
+                try{
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($board);
+                    $em->flush();
+                    $board->setUser(null);
+                    $json = $this->get('app.serializer')->serialize($board);
+                }catch (\Exception $e){
+                    $json = '0';
+                }
+            } else{
+                $json = '0';
+            }
+        }
+        return $response->setJson($json);
+    }
 }
