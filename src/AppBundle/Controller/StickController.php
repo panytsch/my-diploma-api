@@ -58,4 +58,29 @@ class StickController extends BasicController
         }
         return $response->setJson($jsonContent);
     }
+
+    /**
+     * @Route("/sticks")
+     * @Method({"DELETE"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteStickAction(Request $request)
+    {
+        $response = new JsonResponse(null);
+        if ($this->checkToken($request->get('token'), $request->get('nickname')) && $request->get('id')){
+            $em = $this->getDoctrine()->getManager();
+            $stick = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Stick')
+                ->find($request->get('id'))
+            ;
+            $em->remove($stick);
+            $em->flush();
+            $data = ["status" => 1];
+        } else{
+            $data= ['status' => 0];
+        }
+        return $response->setData($data);
+    }
 }
