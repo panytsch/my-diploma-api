@@ -37,6 +37,12 @@ class Stick
     private $board;
 
     /**
+     * @var int
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="stick")
@@ -102,7 +108,7 @@ class Stick
     /**
      * Get board
      *
-     * @return \AppBundle\Entity\Board
+     * @return ArrayCollection
      */
     public function getBoard()
     {
@@ -142,4 +148,22 @@ class Stick
     {
         return $this->item;
     }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+
 }

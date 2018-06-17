@@ -23,6 +23,12 @@ class Item
     private $id;
 
     /**
+     * @var int
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -119,10 +125,26 @@ class Item
     /**
      * Get stick
      *
-     * @return \AppBundle\Entity\Stick
+     * @return ArrayCollection
      */
     public function getStick()
     {
         return $this->stick;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

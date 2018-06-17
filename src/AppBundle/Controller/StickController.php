@@ -37,6 +37,12 @@ class StickController extends BasicController
                     ->find($obj->board)
                 ;
                 $stick->setBoard($board);
+                $position = $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Stick')
+                    ->getPosition($board->getId());
+//                dump($position); die();
+                $stick->setPosition($position + 1);
                 try{
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($stick);
@@ -45,6 +51,7 @@ class StickController extends BasicController
                     $jsonContent = 'error';
                     return $response->setJson($jsonContent);
                 }
+
                 $stick->getBoard()->setUser(null);
                 $jsonContent = $this->get('app.serializer')->serialize($stick);
             }

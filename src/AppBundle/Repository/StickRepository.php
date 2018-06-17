@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class StickRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPosition($board)
+    {
+        return $this
+            ->createQueryBuilder('stick')
+            ->andWhere('stick.board = :board')
+            ->setParameter('board', $board)
+            ->select('COUNT(stick.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }
