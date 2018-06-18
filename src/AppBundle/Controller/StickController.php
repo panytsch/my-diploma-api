@@ -76,6 +76,12 @@ class StickController extends BasicController
                 ->getRepository('AppBundle:Stick')
                 ->find($request->get('id'))
             ;
+            $items = $stick->getItem();
+            if ($items){
+                foreach ($items as $item){
+                    $em->remove($item);
+                }
+            }
             $em->remove($stick);
             $em->flush();
             $data = ["status" => 1];
