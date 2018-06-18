@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class ItemRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $stick
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getPosition($stick)
+    {
+        return $this
+            ->createQueryBuilder('item')
+            ->andWhere('item.stick = :stick')
+            ->setParameter('stick', $stick)
+            ->select('COUNT(item.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }
