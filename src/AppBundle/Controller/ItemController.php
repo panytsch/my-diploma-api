@@ -88,8 +88,8 @@ class ItemController extends BasicController
                 $position = $item->getPosition();
                 $up = $position > $obj->position;
                 $down = $position < $obj->position;
-                if ($obj->lineId !== $obj->newLineId && $obj->position != $position){
-                    $item->setStick($this->getDoctrine()->getRepository("AppBundle:Stick")->find($obj->newLineId));
+                if ($obj->lineId !== $obj->newLineId){
+                    $stick = $this->getDoctrine()->getRepository("AppBundle:Stick")->find($obj->newLineId);
                     $newColection = $this
                         ->getDoctrine()
                         ->getRepository('AppBundle:Stick')
@@ -100,17 +100,19 @@ class ItemController extends BasicController
                         $newPos = $card->getPosition();
                         if ($newPos >= $obj->position){
                             $card->setPosition($newPos+1);
+                            $em->persist($card);
                         }
                     }
-                    foreach ($collection as $item){
-                        $newPos = $item->getPosition();
+                    foreach ($collection as $i){
+                        $newPos = $i->getPosition();
                         if ($newPos > $position){
-                            $item->setPosition($newPos-1);
+                            $i->setPosition($newPos-1);
+                            $em->persist($item);
                         }
                     }
+                    $item->setStick($stick);
                 } else {
                     // if new line = current line
-
                     foreach ($collection as $card){
                         $newPos = $card->getPosition();
                         if ($up && $newPos >= $obj->position && $newPos < $position){

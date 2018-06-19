@@ -115,7 +115,7 @@ class Item
      *
      * @return Item
      */
-    public function setStick(\AppBundle\Entity\Stick $stick = null)
+    public function setStick(Stick $stick = null)
     {
         $this->stick = $stick;
 
