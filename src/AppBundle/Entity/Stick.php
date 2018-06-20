@@ -88,17 +88,17 @@ class Stick
      */
     public function __construct()
     {
-        $this->item = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->item = new ArrayCollection();
     }
 
     /**
      * Set board
      *
-     * @param \AppBundle\Entity\Board $board
+     * @param Board $board
      *
      * @return Stick
      */
-    public function setBoard(\AppBundle\Entity\Board $board = null)
+    public function setBoard(Board $board = null)
     {
         $this->board = $board;
 
@@ -118,11 +118,11 @@ class Stick
     /**
      * Add item
      *
-     * @param \AppBundle\Entity\Item $item
+     * @param Item $item
      *
      * @return Stick
      */
-    public function addItem(\AppBundle\Entity\Item $item)
+    public function addItem(Item $item)
     {
         $this->item[] = $item;
 
@@ -132,9 +132,9 @@ class Stick
     /**
      * Remove item
      *
-     * @param \AppBundle\Entity\Item $item
+     * @param Item $item
      */
-    public function removeItem(\AppBundle\Entity\Item $item)
+    public function removeItem(Item $item)
     {
         $this->item->removeElement($item);
     }
@@ -159,10 +159,13 @@ class Stick
 
     /**
      * @param int $position
+     * @return Stick
      */
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
     }
 
 

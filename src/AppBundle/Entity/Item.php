@@ -142,9 +142,12 @@ class Item
 
     /**
      * @param int $position
+     * @return Item
      */
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
     }
 }

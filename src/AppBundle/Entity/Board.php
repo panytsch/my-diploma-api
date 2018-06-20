@@ -129,17 +129,17 @@ class Board
      */
     public function __construct()
     {
-        $this->stick = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stick = new ArrayCollection();
     }
 
     /**
      * Add stick
      *
-     * @param \AppBundle\Entity\Stick $stick
+     * @param Stick $stick
      *
      * @return Board
      */
-    public function addStick(\AppBundle\Entity\Stick $stick)
+    public function addStick(Stick $stick)
     {
         $this->stick[] = $stick;
 
@@ -149,9 +149,9 @@ class Board
     /**
      * Remove stick
      *
-     * @param \AppBundle\Entity\Stick $stick
+     * @param Stick $stick
      */
-    public function removeStick(\AppBundle\Entity\Stick $stick)
+    public function removeStick(Stick $stick)
     {
         $this->stick->removeElement($stick);
     }
@@ -169,11 +169,11 @@ class Board
     /**
      * Add user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      *
      * @return Board
      */
-    public function addUser(\AppBundle\Entity\User $user)
+    public function addUser(User $user)
     {
         $this->user[] = $user;
 
@@ -183,9 +183,9 @@ class Board
     /**
      * Remove user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      */
-    public function removeUser(\AppBundle\Entity\User $user)
+    public function removeUser(User $user)
     {
         $this->user->removeElement($user);
     }

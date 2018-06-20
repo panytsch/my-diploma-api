@@ -6,7 +6,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Item;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -51,6 +50,7 @@ class ItemController extends BasicController
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($item);
                     $em->flush();
+                    $em->clear();
                 } catch (\Exception $e){
                     $jsonContent = 'error';
                     return $response->setJson($jsonContent);
@@ -90,13 +90,13 @@ class ItemController extends BasicController
                 $down = $position < $obj->position;
                 if ($obj->lineId !== $obj->newLineId){
                     $stick = $this->getDoctrine()->getRepository("AppBundle:Stick")->find($obj->newLineId);
-                    $newColection = $this
+                    $coll = $this
                         ->getDoctrine()
                         ->getRepository('AppBundle:Stick')
                         ->find($obj->newLineId)
                         ->getItem()
                     ;
-                    foreach ($newColection as $card){
+                    foreach ($coll as $card){
                         $newPos = $card->getPosition();
                         if ($newPos >= $obj->position){
                             $card->setPosition($newPos+1);
@@ -132,6 +132,7 @@ class ItemController extends BasicController
                     ->getRepository('AppBundle:Board')
                     ->find($obj->board)
                 ;
+                $em->clear();
                 $json = $this->get('app.serializer')->serialize($result);
             } catch (\Exception $e){
                 $json = ['status' => 0];
