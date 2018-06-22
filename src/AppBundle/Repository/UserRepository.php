@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * UserRepository
@@ -21,7 +22,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('user')
             ->join('user.boards', 'boards')
             ->where("user.nickname LIKE :nick")
-            ->andWhere('user.boards != :board')
+            ->andWhere("boards != :board")
             ->setParameter('board', $boardId)
             ->setParameter('nick', '%'.$text.'%')
             ->getQuery()
