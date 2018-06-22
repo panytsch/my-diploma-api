@@ -12,22 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends BasicController
 {
     /**
-     * @param Request $request
-     * @Route("/user/test")
-     * @Method({"GET"})
-     * @return JsonResponse
-     */
-    public function testAction(Request $request)
-    {
-        $user = $this
-            ->getDoctrine()
-            ->getRepository('AppBundle:User')
-            ->find(1)
-        ;
-        $jsonContent = $this->get('app.serializer')->serialize($user);
-        return JsonResponse::create(null)->setJson($jsonContent);
-    }
-    /**
      * @Route("/users/authorize")
      * @Method({"GET"})
      * @param Request $request
@@ -120,5 +104,53 @@ class UserController extends BasicController
             }
         }
         return $response->setJson($json);
+    }
+
+    /**
+     * @Route("/users/add")
+     * @Method({"PUT","OPTIONS"})
+     * @param Request $request \
+     * @return JsonResponse
+     */
+    public function addUserOnBoard(Request $request)
+    {
+        $response = new JsonResponse(['status' => 0]);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
+        if ($request->getMethod() === "OPTIONS"){
+            return $response;
+        } else {
+            $obj = json_decode($request->getContent());
+            $token = $obj->token;
+            $nickname = $obj->nickname;
+            $id = $obj->id;
+            $boardId = $obj->boardId;
+            if ($this->checkToken($token, $nickname)){
+                try{
+                    $user = $this
+                        ->getDoctrine()
+                        ->getRepository('AppBundle:User')
+                        ->find($id)
+                    ;
+                    $board = $this
+                        ->getDoctrine()
+                        ->getRepository('AppBundle:Board')
+                        ->find($boardId)
+                    ;
+                    $board->addUser($user);
+                    $em = $this
+                        ->getDoctrine()
+                        ->getManager()
+                    ;
+                    $em->persist($board);
+                    $em->flush();
+                    $response->setData(['status' => 1]);
+                }catch(\Exception $e){
+                    return $response;
+                }
+            }
+        }
+        return $response;
     }
 }
