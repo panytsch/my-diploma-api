@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $text
+     * @return array
+     */
+    public function getUserByNickname(string $text)
+    {
+        return $this
+            ->createQueryBuilder('user')
+            ->where("user.nickname LIKE :nick")
+            ->setParameter('nick', '%'.$text.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

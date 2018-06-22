@@ -88,4 +88,37 @@ class UserController extends BasicController
         return JsonResponse::create(null)->setJson($jsonContent);
     }
 
+    /**
+     * @Route("/users/getall")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getUserByNameAction(Request $request)
+    {
+        $response = new JsonResponse(null);
+        $token = $request->get('token');
+        $nickname = $request->get('nickname');
+        $text = $request->get('text');
+        $json = 0;
+        if ($this->checkToken($token, $nickname)){
+            try{
+                $collection = $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:User')
+                    ->getUserByNickname($text)
+                ;
+                foreach ($collection as $item){
+                    $item->setPassword('You shall not pass!!');
+                    $item->setToken('You shall not pass!!');
+                    $item->setEmail('You shall not pass!!');
+                    $item->setBoards(null);
+                }
+                $json = $this->get('app.serializer')->serialize($collection);
+            } catch (\Exception $e){
+                $json = 'DataBase error';
+            }
+        }
+        return $response->setJson($json);
+    }
 }
