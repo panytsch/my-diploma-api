@@ -11,6 +11,53 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ItemController extends BasicController
 {
+
+    /**
+     * @Route("/cards")
+     * @Method({"DELETE", "GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteItemAction(Request $request)
+    {
+        $status = ['status' => 0];
+        $token = $request->get('token');
+        $nickname = $request->get('nickname');
+        $id = $request->get('id');
+        $lineId = $request->get('line');
+        if ($this->checkToken($token, $nickname)){
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $item = $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Item')
+                    ->find($id)
+                ;
+                $line = $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Stick')
+                    ->find($lineId)
+                    ->getItem()
+                ;
+                $position = $item->getPosition();
+                foreach ($line as $card){
+                    $positionCard = $card->getPosition();
+                    if ($positionCard > $position){
+                        $card->setPosition($positionCard-1);
+                        $em->persist($card);
+                    }
+                }
+                $em->remove($item);
+                $em->flush();
+                $status = ['status' => 1];
+            } catch (\Exception $e){
+                $status[] = ['error' => 'Database Error'];
+            }
+        }
+
+        return new JsonResponse($status);
+    }
+
     /**
      * @Route("/cards")
      * @Method({"POST", "OPTIONS"})
