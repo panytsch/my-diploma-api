@@ -12,13 +12,17 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
      * @param string $text
+     * @param int $boardId
      * @return array
      */
-    public function getUserByNickname(string $text)
+    public function getUserByNickname($text, $boardId)
     {
         return $this
             ->createQueryBuilder('user')
+            ->join('user.boards', 'boards')
             ->where("user.nickname LIKE :nick")
+            ->andWhere('user.boards != :board')
+            ->setParameter('board', $boardId)
             ->setParameter('nick', '%'.$text.'%')
             ->getQuery()
             ->getResult()

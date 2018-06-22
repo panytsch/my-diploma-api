@@ -84,13 +84,14 @@ class UserController extends BasicController
         $token = $request->get('token');
         $nickname = $request->get('nickname');
         $text = $request->get('text');
+        $boardId = $request->get('boardId');
         $json = 0;
         if ($this->checkToken($token, $nickname)){
             try{
                 $collection = $this
                     ->getDoctrine()
                     ->getRepository('AppBundle:User')
-                    ->getUserByNickname($text)
+                    ->getUserByNickname($text, $boardId)
                 ;
                 foreach ($collection as $item){
                     $item->setPassword('You shall not pass!!');
