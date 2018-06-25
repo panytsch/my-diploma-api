@@ -1,7 +1,6 @@
 <?php
 
 namespace AppBundle\Repository;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * UserRepository
@@ -13,14 +12,18 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
      * @param string $text
+     * @param string $board
      * @return array
      */
-    public function getUserByNickname($text)
+    public function getUserByNickname($text, $board)
     {
         return $this
             ->createQueryBuilder('user')
-            ->where("user.nickname LIKE :nick")
+            ->join('user.boards', 'boards')
+            ->andWhere("user.nickname LIKE :nick")
+            ->andWhere('boards.id != :board')
             ->setParameter('nick', '%'.$text.'%')
+            ->setParameter('board', $board)
             ->getQuery()
             ->getResult()
             ;

@@ -10,4 +10,22 @@ namespace AppBundle\Repository;
  */
 class BoardRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $user
+     * @param $board
+     * @return array
+     */
+    public function check($user, $board)
+    {
+        return $this
+            ->createQueryBuilder('board')
+            ->join('board.user', 'user')
+            ->where("user.nickname LIKE :us")
+            ->andWhere("board.id != :bo")
+            ->setParameter('us', '%'.$user.'%')
+            ->setParameter('bo', $board)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
