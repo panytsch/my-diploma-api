@@ -62,6 +62,14 @@ class UserController extends BasicController
                 $user->setPassword(password_hash($obj->password, PASSWORD_DEFAULT));
                 $user->setToken(bin2hex(openssl_random_pseudo_bytes(25)));
                 $em = $this->getDoctrine()->getManager();
+                if ($obj->boardId){
+                    $board = $this
+                        ->getDoctrine()
+                        ->getRepository('AppBundle:Board')
+                        ->find($obj->boardId)
+                        ->addUser($user);
+                    $em->persist($board);
+                }
                 $em->persist($user);
                 $em->flush();
                 $user->setPassword('You shall not pass');
@@ -178,7 +186,7 @@ class UserController extends BasicController
             $token = $obj->token;
             $boardId = $obj->boardId;
             $email = $obj->email;
-            $inviteURL = $ref.'/invite?email='.$email.'&boardId='.$boardId;
+            $inviteURL = $ref.'/registration?email='.$email.'&boardId='.$boardId;
             if ($this->checkToken($token, $nickname)){
                 $message = (new \Swift_Message('Hi dude'))
                     ->setFrom('newtrello@admin.4u')
