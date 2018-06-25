@@ -10,6 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends BasicController
 {
+
+    /**
+     * @Route("/send")
+     */
+    public function sendMailAction(\Swift_Mailer $mailer)
+    {
+        $message = (new \Swift_Message('Hi romeo'))
+            ->setFrom('youfear@ffff.com')
+            ->setTo('romio1993@ukr.net')
+            ->setBody($this->renderView('email/registration.html.twig', ['uri' => 'google.com']), 'text/html');
+        $mailer->send($message);
+        return new JsonResponse(['status' => 1]);
+    }
+
     /**
      * @Route("/test")
      * @Method({"GET"})

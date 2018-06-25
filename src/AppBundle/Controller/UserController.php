@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swift_Mailer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -150,6 +151,45 @@ class UserController extends BasicController
                 }catch(\Exception $e){
                     return $response;
                 }
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/users/invite")
+     * @Method({"POST","OPTIONS"})
+     * @param Request $request
+     * @param Swift_Mailer $mailer
+     * @return JsonResponse
+     */
+    public function inviteUserAction(Request $request, Swift_Mailer $mailer)
+    {
+        $response = new JsonResponse(['status' => 0]);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
+        if ($request->getMethod() === "OPTIONS"){
+            return $response;
+        } else {
+            $obj = json_decode($request->getContent());
+            $ref = $request->server->get('HTTP_ORIGIN');
+            $nickname = $obj->nickname;
+            $token = $obj->token;
+            $boardId = $obj->boardId;
+            $email = $obj->email;
+            $inviteURL = $ref.'/invite?email='.$email.'&boardId='.$boardId;
+            if ($this->checkToken($token, $nickname)){
+                $message = (new \Swift_Message('Hi dude'))
+                    ->setFrom('newtrello@admin.4u')
+                    ->setTo($email)
+                    ->setBody($this->renderView('email/registration.html.twig', ['uri' => $inviteURL, 'nickname'=> $nickname]), 'text/html');
+                $mailer->send($message);
+                $response->setData([
+                    'email' => $email,
+                    'inviteUrl' => $inviteURL,
+                    'user' => $nickname
+                ]);
             }
         }
         return $response;
