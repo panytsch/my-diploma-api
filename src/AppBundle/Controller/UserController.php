@@ -100,15 +100,25 @@ class UserController extends BasicController
                 $collection = $this
                     ->getDoctrine()
                     ->getRepository('AppBundle:User')
-                    ->getUserByNickname($text, $boardId)
+//                    ->getUserByNickname($text)
+                ->find(1)
                 ;
+                dump($collection);
+                die();
+                $col =[];
                 foreach ($collection as $item){
                     $item->setPassword('You shall not pass!!');
                     $item->setToken('You shall not pass!!');
                     $item->setEmail('You shall not pass!!');
+                    if (!in_array($boardId, $item->getBoards())){
+                        $item->setBoards(null);
+                        $col[]=$item;
+                    }
                     $item->setBoards(null);
                 }
-                $json = $this->get('app.serializer')->serialize($collection);
+                dump($col);
+                die();
+                $json = $this->get('app.serializer')->serialize($col);
             } catch (\Exception $e){
                 $json = 'DataBase error';
             }
