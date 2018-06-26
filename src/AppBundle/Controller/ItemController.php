@@ -20,6 +20,10 @@ class ItemController extends BasicController
      */
     public function deleteItemAction(Request $request)
     {
+        $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         $status = ['status' => 0];
         $token = $request->get('token');
         $nickname = $request->get('nickname');
@@ -55,7 +59,7 @@ class ItemController extends BasicController
             }
         }
 
-        return new JsonResponse($status);
+        return $response->setData($status);
     }
 
     /**
@@ -69,10 +73,10 @@ class ItemController extends BasicController
     public function addItemAction(Request $request)
     {
         $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         if ($request->getMethod()==='OPTIONS'){
-            $response->headers->set('Access-Control-Allow-Headers','Content-Type');
-            $response->headers->set('Access-Control-Allow-Origin','*');
-            $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS');
             $jsonContent = 'options';
         }
         else {
@@ -117,6 +121,10 @@ class ItemController extends BasicController
      */
     public function changeItemAction(Request $request)
     {
+        $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         $obj = json_decode($request->getContent());
         if ($this->checkToken($obj->token, $obj->nickname)){
             $em = $this->getDoctrine()->getManager();
@@ -187,6 +195,6 @@ class ItemController extends BasicController
         } else {
             $json=['status' => 0];
         }
-        return new JsonResponse($json);
+        return $response->setJson($json);
     }
 }

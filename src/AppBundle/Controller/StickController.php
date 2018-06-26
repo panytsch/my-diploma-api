@@ -21,10 +21,10 @@ class StickController extends BasicController
     public function addStickAction(Request $request)
     {
         $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         if ($request->getMethod()==='OPTIONS'){
-            $response->headers->set('Access-Control-Allow-Headers','Content-Type');
-            $response->headers->set('Access-Control-Allow-Origin','*');
-            $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS');
             $jsonContent = 'options';
         }
         else {
@@ -69,6 +69,9 @@ class StickController extends BasicController
     public function deleteStickAction(Request $request)
     {
         $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         if ($this->checkToken($request->get('token'), $request->get('nickname')) && $request->get('id')){
             $em = $this->getDoctrine()->getManager();
             $stick = $this

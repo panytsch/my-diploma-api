@@ -20,10 +20,14 @@ class BoardController extends BasicController
      */
     public function getUserBoardsAction(Request $request)
     {
+        $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         $verify = $this->checkToken($request->get('token'),$request->get('nickname'));
         if (!$verify){
             $verify = $this->get('app.serializer')->serialize($verify);
-            return JsonResponse::create(null)->setJson($verify);
+            return $response->setJson($verify);
         }
 
         $boards = $this
@@ -36,7 +40,7 @@ class BoardController extends BasicController
             $item->setUser(null);
         }
         $jsonContent = $this->get('app.serializer')->serialize($boards);
-        return JsonResponse::create(null)->setJson($jsonContent);
+        return $response->setJson($jsonContent);
     }
 
     /**
@@ -48,10 +52,10 @@ class BoardController extends BasicController
     public function setUserBoardAction(Request $request)
     {
         $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, DELETE, PUT, GET');
         if ($request->getMethod()==='OPTIONS'){
-            $response->headers->set('Access-Control-Allow-Headers','Content-Type');
-            $response->headers->set('Access-Control-Allow-Origin','*');
-            $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS');
             $json = 'options';
         }else{
             $obj = json_decode($request->getContent());
