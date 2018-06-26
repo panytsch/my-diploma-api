@@ -20,6 +20,10 @@ class UserController extends BasicController
      */
     public function authorizeAction(Request $request)
     {
+        $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
         $user = $this
             ->getDoctrine()
             ->getRepository("AppBundle:User")
@@ -36,7 +40,7 @@ class UserController extends BasicController
         } else{
             $jsonContent = $this->get('app.serializer')->serialize(null);
         }
-        return JsonResponse::create(null)->setJson($jsonContent);
+        return $response->setJson($jsonContent);
     }
 
     /**
@@ -47,11 +51,11 @@ class UserController extends BasicController
      */
     public function registrationAction(Request $request)
     {
+        $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
         if ($request->getMethod() === 'OPTIONS'){
-            $response = new JsonResponse(null);
-            $response->headers->set('Access-Control-Allow-Headers','Content-Type');
-            $response->headers->set('Access-Control-Allow-Origin','*');
-            $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
             return $response;
         } else {
             try{
@@ -75,10 +79,10 @@ class UserController extends BasicController
                 $user->setPassword('You shall not pass');
                 $jsonContent = $this->get('app.serializer')->serialize($user);
             } catch (\Exception $e){
-                return new JsonResponse(null);
+                return $response;
             }
         }
-        return JsonResponse::create(null)->setJson($jsonContent);
+        return $response->setJson($jsonContent);
     }
 
     /**
