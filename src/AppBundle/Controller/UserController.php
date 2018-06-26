@@ -90,6 +90,9 @@ class UserController extends BasicController
     public function getUserByNameAction(Request $request)
     {
         $response = new JsonResponse(null);
+        $response->headers->set('Access-Control-Allow-Headers','Content-Type');
+        $response->headers->set('Access-Control-Allow-Origin','*');
+        $response->headers->set('Access-Control-Allow-Methods','POST, OPTIONS, GET');
         $token = $request->get('token');
         $nickname = $request->get('nickname');
         $text = $request->get('text');
@@ -110,7 +113,7 @@ class UserController extends BasicController
                 }
                 $json = $this->get('app.serializer')->serialize($collection);
             } catch (\Exception $e){
-                $json = 'DataBase error';
+                $json = 0;
             }
         }
         return $response->setJson($json);

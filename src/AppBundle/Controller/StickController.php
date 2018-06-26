@@ -28,8 +28,8 @@ class StickController extends BasicController
             $jsonContent = 'options';
         }
         else {
+            $jsonContent = 0;
             $obj = json_decode($request->getContent());
-            $jsonContent = 'post';
             if ($this->checkToken($obj->token, $obj->nickname)){
                 $stick = new Stick();
                 $stick->setTitle($obj->title);

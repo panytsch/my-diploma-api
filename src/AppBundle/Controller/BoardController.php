@@ -29,7 +29,6 @@ class BoardController extends BasicController
             $verify = $this->get('app.serializer')->serialize($verify);
             return $response->setJson($verify);
         }
-
         $boards = $this
             ->getDoctrine()
             ->getRepository("AppBundle:User")
