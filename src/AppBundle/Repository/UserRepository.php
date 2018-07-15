@@ -19,11 +19,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this
             ->createQueryBuilder('user')
-            ->join('user.boards', 'boards')
+//            ->join('user.boards', 'boards')
             ->andWhere("user.nickname LIKE :nick")
-            ->andWhere('boards.id != :board')
+//            ->andWhere('boards.id != :board')
             ->setParameter('nick', '%'.$text.'%')
-            ->setParameter('board', $board)
+//            ->setParameter('board', $board)
             ->getQuery()
             ->getResult()
             ;
